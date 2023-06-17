@@ -49,7 +49,7 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Build
-        run: pnpm build --base=/tri-minesweeper/
+        run: pnpm type-check && pnpm build-only --base=/tri-minesweeper/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1

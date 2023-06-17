@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useStateStore = defineStore('state', ()=> {
   const size = ref(16)  // 段数
-  const mineCount = ref(10)  // 地雷の数
+  const mineCount = ref(30)  // 地雷の数
 
   const mines = ref<number[]>([])  // 地雷がある場所
   const open = ref<number[]>([])  // 開いている場所
@@ -198,9 +198,23 @@ export const useStateStore = defineStore('state', ()=> {
       started.value = true
     }
 
+    // 開いている場合は無視
+    if (open.value.includes(n)) {
+      return
+    }
+
     // 旗を立てる
     if (flagMode.value) {
-      flagged.value.push(n)
+      if (flagged.value.includes(n)) {
+        flagged.value.splice(flagged.value.indexOf(n), 1)
+      } else {
+        flagged.value.push(n)
+      }
+      return
+    }
+
+    // 旗が立っている場合は無視
+    if (flagged.value.includes(n)) {
       return
     }
 
@@ -222,9 +236,11 @@ export const useStateStore = defineStore('state', ()=> {
     // 周辺に地雷が無ければ再帰処理
     const adjacent = getAdjacent(n)
     if ([...mines.value, ...adjacent].filter(item => mines.value.includes(item) && adjacent.includes(item)).length == 0) {
-      click(n)
+      for (const a of adjacent) {
+        click(a)
+      }
     }
   }
 
-  return { size, mineCount, mines, open, flagged, flagMode, started, cleared, failed, click }
+  return { size, mineCount, mines, open, flagged, flagMode, started, cleared, failed, getAdjacent, click }
 })

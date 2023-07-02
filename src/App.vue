@@ -17,10 +17,10 @@
     Clear!!
   </div>
   <div class="overflow-auto">
-    <div class="mx-auto my-6" :style="`width: calc(${size} * 3rem);`">
-    <div class="flex flex-wrap justify-center">
-      <Triangle v-for="_, i in Array(size ** 2)" :n="i + 1" />
-    </div>
+    <div class="mx-auto my-6 px-6" :style="`width: calc(${size} * 3rem + 3rem);`">
+      <div class="flex flex-wrap justify-center">
+        <Triangle v-for="_, i in Array(size ** 2)" :n="i + 1" />
+      </div>
     </div>
   </div>
 </template>

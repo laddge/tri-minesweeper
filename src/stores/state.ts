@@ -204,7 +204,7 @@ export const useStateStore = defineStore('state', ()=> {
         if (rand != n && !adjacent.includes(rand)) {
           mines.value.push(rand)
         }
-        if (mines.value.length == mineCount.value) {
+        if (Array.from(new Set(mines.value)).length == mineCount.value) {
           break
         }
       }

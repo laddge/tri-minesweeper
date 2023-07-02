@@ -4,6 +4,7 @@
   import { storeToRefs } from 'pinia'
 
   const { size, mineCount, flagged, flagMode, started, cleared, failed } = storeToRefs(useStateStore())
+  const { reset } = useStateStore()
 </script>
 
 <template>
@@ -12,6 +13,7 @@
       <input type="checkbox" :disabled="!started || cleared || failed" v-model="flagMode" class="checkbox checkbox-warning" />
       <span class="label-text ml-4">flag ({{ flagged.length }} / {{ mineCount }})</span>
     </label>
+    <button @click="reset" class="btn btn-ghost">reset</button>
   </div>
   <div v-if="cleared" class="my-4 text-center text-success text-xl">
     Clear!!

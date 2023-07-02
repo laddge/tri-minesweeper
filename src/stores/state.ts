@@ -14,6 +14,20 @@ export const useStateStore = defineStore('state', ()=> {
   const cleared = ref(false)  // クリアされているか
   const failed = ref(false)  // 地雷を踏んだか
 
+  const reset = () => {
+    size.value = 16
+    mineCount.value = 30
+
+    mines.value = []
+    open.value = []
+    flagged.value = []
+
+    flagMode.value = false
+    started.value = false
+    cleared.value = false
+    failed.value = false
+  }
+
   // 隣接する三角形の番号のリストを返す
   const getAdjacent = (n: number) => {
     const k = Math.ceil(n ** .5)  // k段目
@@ -242,5 +256,5 @@ export const useStateStore = defineStore('state', ()=> {
     }
   }
 
-  return { size, mineCount, mines, open, flagged, flagMode, started, cleared, failed, getAdjacent, click }
-})
+  return { size, mineCount, mines, open, flagged, flagMode, started, cleared, failed, reset, getAdjacent, click }
+}, { persist: true })

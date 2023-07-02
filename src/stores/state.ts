@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const useStateStore = defineStore('state', ()=> {
   const level = ref(1)  // レベル
   const size = computed(() => [8, 16, 32][level.value])  // 段数
-  const mineCount = computed(() => [15, 30, 60][level.value])  // 地雷の数
+  const mineCount = computed(() => [15, 30, 120][level.value])  // 地雷の数
 
   const mines = ref<number[]>([])  // 地雷がある場所
   const open = ref<number[]>([])  // 開いている場所

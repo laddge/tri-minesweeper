@@ -1,14 +1,31 @@
 <script setup lang="ts">
+  import { ref, watch } from 'vue'
   import Triangle from '@/components/Triangle.vue'
   import { useStateStore } from '@/stores/state'
   import { storeToRefs } from 'pinia'
 
-  const { size, mineCount, flagged, flagMode, started, cleared, failed } = storeToRefs(useStateStore())
+  const { level, size, mineCount, flagged, flagMode, started, cleared, failed } = storeToRefs(useStateStore())
   const { reset } = useStateStore()
 </script>
 
 <template>
-  <div class="form-control w-fit mx-auto my-4">
+  <div class="form-control w-fit mx-auto mt-4">
+    <div class="flex flex-wrap">
+      <label class="cursor-pointer label">
+        <input type="radio" name="level" :disabled="started || cleared || failed" v-model="level" value="0" class="radio radio-info" />
+        <span class="label-text ml-4">Easy</span>
+      </label>
+      <label class="cursor-pointer label">
+        <input type="radio" name="level" :disabled="started || cleared || failed" v-model="level" value="1" class="radio radio-info" />
+        <span class="label-text ml-4">Normal</span>
+      </label>
+      <label class="cursor-pointer label">
+        <input type="radio" name="level" :disabled="started || cleared || failed" v-model="level" value="2" class="radio radio-info" />
+        <span class="label-text ml-4">Hard</span>
+      </label>
+    </div>
+  </div>
+  <div class="form-control w-fit mx-auto mb-4">
     <label class="cursor-pointer label">
       <input type="checkbox" :disabled="!started || cleared || failed" v-model="flagMode" class="checkbox checkbox-warning" />
       <span class="label-text ml-4">flag ({{ flagged.length }} / {{ mineCount }})</span>

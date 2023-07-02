@@ -1,9 +1,10 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useStateStore = defineStore('state', ()=> {
-  const size = ref(16)  // 段数
-  const mineCount = ref(30)  // 地雷の数
+  const level = ref(1)  // レベル
+  const size = computed(() => [8, 16, 32][level.value])  // 段数
+  const mineCount = computed(() => [15, 30, 60][level.value])  // 地雷の数
 
   const mines = ref<number[]>([])  // 地雷がある場所
   const open = ref<number[]>([])  // 開いている場所
@@ -15,8 +16,7 @@ export const useStateStore = defineStore('state', ()=> {
   const failed = ref(false)  // 地雷を踏んだか
 
   const reset = () => {
-    size.value = 16
-    mineCount.value = 30
+    level.value = 1
 
     mines.value = []
     open.value = []
@@ -256,5 +256,5 @@ export const useStateStore = defineStore('state', ()=> {
     }
   }
 
-  return { size, mineCount, mines, open, flagged, flagMode, started, cleared, failed, reset, getAdjacent, click }
+  return { level, size, mineCount, mines, open, flagged, flagMode, started, cleared, failed, reset, getAdjacent, click }
 }, { persist: true })
